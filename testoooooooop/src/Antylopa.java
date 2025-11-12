@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Antylopa extends Zwierze{
 
-    Napis napis = new Napis();
+    Napis napis = Napis.getInstance();
 
     public Antylopa(Swiat swiat, Punkt poz, int wiek){
         super(RodzajOrganizmu.ANTYLOPA,swiat,poz,wiek,4,4);

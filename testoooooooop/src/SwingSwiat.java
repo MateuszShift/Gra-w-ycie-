@@ -19,7 +19,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
     private GrafikaKomentarzy grafikaKomentarzy = null;
     private JPanel glowneMenu;
     private Swiat swiat;
-    private Napis napis = new Napis();
+    private Napis napis = Napis.getInstance();
     public SwingSwiat(String nazwa) { //tworzenie menu i calej symulacji
         toolkit = Toolkit.getDefaultToolkit();
         dimension = toolkit.getScreenSize();

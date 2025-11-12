@@ -16,7 +16,7 @@ public class Swiat {
     private ArrayList<Organizm> listaOrganizmow;
     private Czlowiek czlowiek;
     private SwingSwiat swingSwiat;
-    Napis napis = new Napis();
+    Napis napis = Napis.getInstance();
 
     public Swiat(SwingSwiat swingSwiat) {
         this.N = 0;

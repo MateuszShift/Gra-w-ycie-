@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Czlowiek extends Zwierze {
 
-    Napis napis = new Napis();
+    Napis napis = Napis.getInstance();
     private Kierunek kierunekRuchu;
     private Umiejetnosc umiejetnosc;
 

@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Barszcz extends Roslina {
 
-    Napis napis = new Napis();
+    Napis napis = Napis.getInstance();
 
     public Barszcz(Swiat swiat, Punkt poz, int wiek){
 

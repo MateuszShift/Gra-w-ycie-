@@ -3,7 +3,7 @@ import java.util.Random;
 
 public abstract class Zwierze extends Organizm {
     private int zasiegRuchu;//rozny dla antylopy
-    Napis napis = new Napis();
+    Napis napis = Napis.getInstance();
     private double szansaWykonywaniaRuchu;//szansa mniejsza dla zolwia kiedy sie go nadpisze
     public Zwierze(RodzajOrganizmu rodzajOrganizmu, Swiat swiat, Punkt pozycja, int turaUrodzenia, int sila, int inicjatywa) {
         super(rodzajOrganizmu, swiat, pozycja, turaUrodzenia, sila, inicjatywa);

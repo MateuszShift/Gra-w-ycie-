@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Zolw extends Zwierze{
 
-    Napis napis = new Napis();
+    Napis napis = Napis.getInstance();
 
     Zolw(Swiat swiat, Punkt poz, int wiek){
         super(RodzajOrganizmu.ZOLW,swiat,poz,wiek,2,1);

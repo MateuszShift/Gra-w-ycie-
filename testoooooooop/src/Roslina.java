@@ -2,7 +2,7 @@ import java.util.Random;
 
 public abstract class Roslina extends Organizm{
 
-    Napis napis = new Napis();
+    Napis napis = Napis.getInstance();
 
     protected Roslina(RodzajOrganizmu rodzaj,Swiat swiat, Punkt poz,int wiek, int sila, int inicjatywa){
         super(rodzaj,swiat,poz,wiek,sila,inicjatywa);
