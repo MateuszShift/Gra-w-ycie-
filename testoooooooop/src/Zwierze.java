@@ -33,14 +33,14 @@ public abstract class Zwierze extends Organizm {
                 return;
             }
             else {
-                Organizm temp = UtworzOrganizm.stworzNowyOrganizm(getRodzajOrganizmu(), swiat, temp2);
+                Organizm temp = OrganizmFactory.stworzOrganizm(getRodzajOrganizmu(), swiat, temp2);
                 Napis.dodajNapis("Powstal nowy " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getX());
                 swiat.dodajOrganizm(temp);
                 setCzyRozmnazalSie(true);
                 innyOrganizm.setCzyRozmnazalSie(true);
             }
         } else {
-            Organizm temp = UtworzOrganizm.stworzNowyOrganizm(getRodzajOrganizmu(), swiat, temp1);
+            Organizm temp = OrganizmFactory.stworzOrganizm(getRodzajOrganizmu(), swiat, temp1);
             Napis.dodajNapis("Powstal nowy " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getX());
             swiat.dodajOrganizm(temp);
             setCzyRozmnazalSie(true);
