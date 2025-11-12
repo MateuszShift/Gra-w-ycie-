@@ -16,6 +16,7 @@ public class Swiat {
     private ArrayList<Organizm> listaOrganizmow;
     private Czlowiek czlowiek;
     private SwingSwiat swingSwiat;
+    Napis napis = new Napis();
 
     public Swiat(SwingSwiat swingSwiat) {
         this.N = 0;
@@ -76,7 +77,7 @@ public class Swiat {
     public void wykonajTure() {
         if (czyJestKoniecGry) return;
         wiekWTurach++;
-        Napis.dodajNapis("\nTURA SYMULACJI " + wiekWTurach);
+        napis.dodajNapis("\nTURA SYMULACJI " + wiekWTurach);
         sortujOrganizmy();
         for (int i = 0; i < listaOrganizmow.size(); i++) {
             if (listaOrganizmow.get(i).getTuraUrodzenia() != wiekWTurach && listaOrganizmow.get(i).getCzyUmarl() == false) {

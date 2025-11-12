@@ -3,6 +3,8 @@ import java.util.Random;
 
 public class Barszcz extends Roslina {
 
+    Napis napis = new Napis();
+
     public Barszcz(Swiat swiat, Punkt poz, int wiek){
 
         super(RodzajOrganizmu.BARSZCZ_SOSNOWSKIEGO,swiat,poz,wiek,10,0);
@@ -27,12 +29,12 @@ public class Barszcz extends Roslina {
                 tmpOrganizm = swiat.coZnajdujeSieNaPolu(new Punkt(pozX + 1, pozY));
             if (tmpOrganizm != null) {
                 if(swiat.getCzlowiek().getUmiejetnosc().getCzyJestAktywna() && tmpOrganizm.rodzajOrganizmuToString() == "Czlowiek"){
-                    Napis.dodajNapis("Czlowiek wlasnie wkrada sie na pole barszczu");
+                    napis.dodajNapis("Czlowiek wlasnie wkrada sie na pole barszczu");
                     return;
                 }
                 else if(swiat.getCzlowiek().getUmiejetnosc().getCzyJestAktywna() == false){
                     swiat.usunOrganizm(tmpOrganizm);
-                    Napis.dodajNapis(rodzajOrganizmuToString() + " zabija " + tmpOrganizm.rodzajOrganizmuToString());
+                    napis.dodajNapis(rodzajOrganizmuToString() + " zabija " + tmpOrganizm.rodzajOrganizmuToString());
                 }
 
             }

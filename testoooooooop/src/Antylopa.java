@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Antylopa extends Zwierze{
 
+    Napis napis = new Napis();
 
     public Antylopa(Swiat swiat, Punkt poz, int wiek){
         super(RodzajOrganizmu.ANTYLOPA,swiat,poz,wiek,4,4);
@@ -24,17 +25,17 @@ public class Antylopa extends Zwierze{
 
         if(szansa == 1){
             if(this == of){
-                Napis.dodajNapis(rodzajOrganizmuToString()+" odalo sie uciec od " + att.rodzajOrganizmuToString());
+                napis.dodajNapis(rodzajOrganizmuToString()+" odalo sie uciec od " + att.rodzajOrganizmuToString());
                 Punkt nowaPoz = this.getPozycja();
                 wykonajRuch(wybierzPustePole(this.getPozycja()));
                 if(getPozycja().equals(nowaPoz)){
                     swiat.usunOrganizm(this);
-                    Napis.dodajNapis(att.rodzajOrganizmuToString() + " pokonuje " + of.rodzajOrganizmuToString());
+                    napis.dodajNapis(att.rodzajOrganizmuToString() + " pokonuje " + of.rodzajOrganizmuToString());
                 }
                 att.wykonajRuch(nowaPoz);
             }
             else if (this == att){
-                Napis.dodajNapis(rodzajOrganizmuToString() + " udalo sie uciec od " + of.getRodzajOrganizmu());
+                napis.dodajNapis(rodzajOrganizmuToString() + " udalo sie uciec od " + of.getRodzajOrganizmu());
                 Punkt nowaPoz = wybierzPustePole(of.getPozycja());
                 wykonajRuch(nowaPoz); //lub dodac ifa
             }

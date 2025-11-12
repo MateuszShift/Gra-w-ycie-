@@ -2,6 +2,8 @@ import java.awt.*;
 
 public class Zolw extends Zwierze{
 
+    Napis napis = new Napis();
+
     Zolw(Swiat swiat, Punkt poz, int wiek){
         super(RodzajOrganizmu.ZOLW,swiat,poz,wiek,2,1);
         this.setSzansaWykonywaniaRuchu(0.25);
@@ -22,7 +24,7 @@ public class Zolw extends Zwierze{
                 return false;
             } else {
                 if (of.getSila() < 5 && (att.getRodzajOrganizmu() == RodzajOrganizmu.OWCA || att.getRodzajOrganizmu() == RodzajOrganizmu.ANTYLOPA || att.getRodzajOrganizmu() == RodzajOrganizmu.LIS || att.getRodzajOrganizmu() == RodzajOrganizmu.WILK || att.getRodzajOrganizmu() == RodzajOrganizmu.CZLOWIEK)) {
-                    Napis.dodajNapis(rodzajOrganizmuToString() + " odpiera atak " + of.rodzajOrganizmuToString());
+                    napis.dodajNapis(rodzajOrganizmuToString() + " odpiera atak " + of.rodzajOrganizmuToString());
                     return true;
                 } else {
                     return false;
@@ -31,7 +33,7 @@ public class Zolw extends Zwierze{
         }
         else{
             if (att.getSila() < 5 && (att.getRodzajOrganizmu() == RodzajOrganizmu.OWCA || att.getRodzajOrganizmu() == RodzajOrganizmu.ANTYLOPA || att.getRodzajOrganizmu() == RodzajOrganizmu.LIS || att.getRodzajOrganizmu() == RodzajOrganizmu.WILK || att.getRodzajOrganizmu() == RodzajOrganizmu.CZLOWIEK)) {
-                Napis.dodajNapis(rodzajOrganizmuToString() + " odbil atak " + att.rodzajOrganizmuToString());
+                napis.dodajNapis(rodzajOrganizmuToString() + " odbil atak " + att.rodzajOrganizmuToString());
                 return true;
             }
             else {

@@ -2,6 +2,8 @@ import java.util.Random;
 
 public abstract class Roslina extends Organizm{
 
+    Napis napis = new Napis();
+
     protected Roslina(RodzajOrganizmu rodzaj,Swiat swiat, Punkt poz,int wiek, int sila, int inicjatywa){
         super(rodzaj,swiat,poz,wiek,sila,inicjatywa);
         setSzansaRozmnazania(0.05);
@@ -23,7 +25,7 @@ public abstract class Roslina extends Organizm{
         }
         else{
             Organizm temp = OrganizmFactory.stworzOrganizm(getRodzajOrganizmu(),swiat,pTemp);
-            Napis.dodajNapis("Rozsadziła się roslina " + temp.rodzajOrganizmuToString() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getY());
+            napis.dodajNapis("Rozsadziła się roslina " + temp.rodzajOrganizmuToString() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getY());
             swiat.dodajOrganizm(temp);
         }
     }

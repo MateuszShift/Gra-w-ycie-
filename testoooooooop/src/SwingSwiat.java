@@ -19,6 +19,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
     private GrafikaKomentarzy grafikaKomentarzy = null;
     private JPanel glowneMenu;
     private Swiat swiat;
+    private Napis napis = new Napis();
     public SwingSwiat(String nazwa) { //tworzenie menu i calej symulacji
         toolkit = Toolkit.getDefaultToolkit();
         dimension = toolkit.getScreenSize();
@@ -53,7 +54,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) { //zarzadzanie menu glownym
         if (e.getSource() == nowaSymulacja) {
-            Napis.wyczyscKomentarze();
+            napis.wyczyscKomentarze();
             int sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Szerokosc", "20"));
             int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Wysokosc", "20"));
             double zapelnienieSwiatu = Double.parseDouble(JOptionPane.showInputDialog(jFrame, "Zapelnienie", "0.1"));
@@ -62,7 +63,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             rozpocznij();
         }
         if (e.getSource() == wczytajSymulacje) {
-            Napis.wyczyscKomentarze();
+            napis.wyczyscKomentarze();
             String nameOfFile = JOptionPane.showInputDialog(jFrame, "Nazwa pliku", "...");
             swiat = Swiat.wczytaj(nameOfFile);
             swiat.setSwingSwiat(this);
@@ -79,7 +80,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
         if (e.getSource() == zapiszSymulacje) {
             String nameOfFile = JOptionPane.showInputDialog(jFrame, "Nazwa pliku", "...");
             swiat.zapisz(nameOfFile);
-            Napis.dodajNapis("Zapisano symulacje");
+            napis.dodajNapis("Zapisano symulacje");
             grafikaKomentarzy.odswiez();
         }
         if (e.getSource() == wyjdz) {
@@ -104,20 +105,20 @@ public class SwingSwiat implements ActionListener, KeyListener {
                     Umiejetnosc umiejetnosc = swiat.getCzlowiek().getUmiejetnosc();
                     umiejetnosc.Aktywuj();
                 } else {
-                    Napis.dodajNapis("\nNie mozna sie tak poruszac sprobuj jeszcze raz");
+                    napis.dodajNapis("\nNie mozna sie tak poruszac sprobuj jeszcze raz");
                     grafikaKomentarzy.odswiez();
                     return;
                 }
             } else if (!swiat.getCzyCzlowiekZyje()) {
-                Napis.dodajNapis("Czlowiek umarl, to koniec");
+                napis.dodajNapis("Czlowiek umarl, to koniec");
                 grafikaKomentarzy.odswiez();
                 return;
             } else {
-                Napis.dodajNapis("\nNie mozna sie tak poruszac sprobuj jeszcze raz");
+                napis.dodajNapis("\nNie mozna sie tak poruszac sprobuj jeszcze raz");
                 grafikaKomentarzy.odswiez();
                 return;
             }
-            Napis.wyczyscKomentarze();
+            napis.wyczyscKomentarze();
             swiat.setPauza(false);
             swiat.wykonajTure();
             odswiezSwiat();
@@ -145,7 +146,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
                 public void valueChanged(ListSelectionEvent e) {
                     Organizm temp = OrganizmFactory.stworzOrganizm(typOrganizmuList[jList.getSelectedIndex()], swiat, punkt);
                     swiat.dodajOrganizm(temp);
-                    Napis.dodajNapis("Stworzono nowy organizm " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getY());
+                    napis.dodajNapis("Stworzono nowy organizm " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getY());
                     odswiezSwiat();
                 }
             });
@@ -238,7 +239,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
         public GrafikaKomentarzy() {
             super();
             setBounds(grafikaPlanszy.getX() + grafikaPlanszy.getWidth(), glowneMenu.getY(), glowneMenu.getWidth() - grafikaPlanszy.getWidth(), (glowneMenu.getHeight() * 5 / 6)+140);
-            tekst = Napis.getTekst();
+            tekst = napis.getTekst();
             textArea = new JTextArea(tekst);
             textArea.setEditable(false);
             setLayout(new CardLayout());
@@ -248,7 +249,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             add(scroll);
         }
         public void odswiez() {
-            tekst = instriction + Napis.getTekst();
+            tekst = instriction + napis.getTekst();
             textArea.setText(tekst);
         }
     }

@@ -1,17 +1,17 @@
 
 
 public class Napis {
-    private static String tekst = "";
+    private  String tekst = "";
 
-    public static void dodajNapis(String napis) {
+    public  void dodajNapis(String napis) {
         tekst += napis + "\n";
     }
 
-    public static String getTekst() {
+    public  String getTekst() {
         return tekst;
     }
 
-    public static void wyczyscKomentarze() {
+    public  void wyczyscKomentarze() {
         tekst = "";
     }
 }

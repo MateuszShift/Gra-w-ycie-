@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class Czlowiek extends Zwierze {
 
+    Napis napis = new Napis();
     private Kierunek kierunekRuchu;
     private Umiejetnosc umiejetnosc;
 
@@ -34,10 +35,10 @@ public class Czlowiek extends Zwierze {
     @Override
     public void akcja() {
         if (umiejetnosc.getCzyJestAktywna()) {
-            Napis.dodajNapis(napisOrganizmToSring() + " jest niesmiertelny jeszcze przez " + umiejetnosc.getCzasTrwania() + " tur)");
+            napis.dodajNapis(napisOrganizmToSring() + " jest niesmiertelny jeszcze przez " + umiejetnosc.getCzasTrwania() + " tur)");
         }
         if(umiejetnosc.getCzyJestAktywna() == false){
-            Napis.dodajNapis(napisOrganizmToSring()+ " jest ŚMIERTELNY, siła: " + getSila());
+            napis.dodajNapis(napisOrganizmToSring()+ " jest ŚMIERTELNY, siła: " + getSila());
 
         }
         for (int i = 0; i < getZasiegRuchu(); i++) {
