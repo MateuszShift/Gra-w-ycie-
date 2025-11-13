@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.Random;
 
 public abstract class Zwierze extends Organizm {
@@ -34,14 +33,14 @@ public abstract class Zwierze extends Organizm {
                 return;
             }
             else {
-                Organizm temp = StworzOrganizm.stworzOrganizm(getRodzajOrganizmu(), swiat, temp2);
+                Organizm temp = OrganizmFactory.stworzOrganizm(getRodzajOrganizmu(), swiat, temp2);
                 napis.dodajNapis("Powstal nowy " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getX());
                 swiat.dodajOrganizm(temp);
                 setCzyRozmnazalSie(true);
                 innyOrganizm.setCzyRozmnazalSie(true);
             }
         } else {
-            Organizm temp = StworzOrganizm.stworzOrganizm(getRodzajOrganizmu(), swiat, temp1);
+            Organizm temp = OrganizmFactory.stworzOrganizm(getRodzajOrganizmu(), swiat, temp1);
             napis.dodajNapis("Powstal nowy " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getX());
             swiat.dodajOrganizm(temp);
             setCzyRozmnazalSie(true);

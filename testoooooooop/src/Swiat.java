@@ -61,13 +61,13 @@ public class Swiat {
     public void generujSwiat(double zapelnienieSwiatu) {
         int liczbaOrganizmow = (int) Math.floor(N * M * zapelnienieSwiatu);
         Punkt pozycja = wylosujWolnePole();
-        Organizm temp = StworzOrganizm.stworzOrganizm(Organizm.RodzajOrganizmu.CZLOWIEK, this, pozycja);
+        Organizm temp = OrganizmFactory.stworzOrganizm(Organizm.RodzajOrganizmu.CZLOWIEK, this, pozycja);
         dodajOrganizm(temp);
         czlowiek = (Czlowiek) temp;
         for (int i = 0; i < liczbaOrganizmow - 2; i++) {
             pozycja = wylosujWolnePole();
             if (pozycja != new Punkt(-1, -1)) {
-                dodajOrganizm(StworzOrganizm.stworzOrganizm(Organizm.losuj(), this, pozycja));
+                dodajOrganizm(OrganizmFactory.stworzOrganizm(Organizm.losuj(), this, pozycja));
             }
             else {
                 return;
@@ -217,7 +217,7 @@ public class Swiat {
                 int x = Integer.parseInt(zapis[1]);
                 int y = Integer.parseInt(zapis[2]);
 
-                Organizm tOrg = StworzOrganizm.stworzOrganizm(typOrganizmu, temp, new Punkt(x, y));
+                Organizm tOrg = OrganizmFactory.stworzOrganizm(typOrganizmu, temp, new Punkt(x, y));
                 int sila = Integer.parseInt(zapis[3]);
                 tOrg.setSila(sila);
                 int turaUrodzenia = Integer.parseInt(zapis[4]);

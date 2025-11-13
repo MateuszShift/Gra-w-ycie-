@@ -144,7 +144,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             jList.addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
-                    Organizm temp = StworzOrganizm.stworzOrganizm(typOrganizmuList[jList.getSelectedIndex()], swiat, punkt);
+                    Organizm temp = OrganizmFactory.stworzOrganizm(typOrganizmuList[jList.getSelectedIndex()], swiat, punkt);
                     swiat.dodajOrganizm(temp);
                     napis.dodajNapis("Stworzono nowy organizm " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getY());
                     odswiezSwiat();
