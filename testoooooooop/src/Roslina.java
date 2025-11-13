@@ -24,7 +24,7 @@ public abstract class Roslina extends Organizm{
             return;
         }
         else{
-            Organizm temp = OrganizmFactory.stworzOrganizm(getRodzajOrganizmu(),swiat,pTemp);
+            Organizm temp = StworzOrganizm.stworzOrganizm(getRodzajOrganizmu(),swiat,pTemp);
             napis.dodajNapis("Rozsadziła się roslina " + temp.rodzajOrganizmuToString() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getY());
             swiat.dodajOrganizm(temp);
         }
