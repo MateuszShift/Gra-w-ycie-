@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import java.util.Random;
 
@@ -41,6 +39,20 @@ public abstract class Organizm {
     protected boolean czyKierunekZablokowany(Kierunek kierunek) {
         return !(this.kierunek[kierunek.getWartosc()]);
     }
+
+    // Metody publiczne dla Strategy pattern
+    public boolean czyKierunekZablokowany_Public(Kierunek kierunek) {
+        return czyKierunekZablokowany(kierunek);
+    }
+
+    public void zablokujKierunek_Public(Kierunek kierunek) {
+        zablokujKierunek(kierunek);
+    }
+
+    public void odblokujWszystkieKierunki_Public() {
+        odblokujWszystkieKierunki();
+    }
+
     public int getSila() {
         return sila;
     }

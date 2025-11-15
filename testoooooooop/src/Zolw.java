@@ -9,6 +9,7 @@ public class Zolw extends Zwierze{
         this.setSzansaWykonywaniaRuchu(0.25);
         this.setZasiegRuchu(1);
         setKolor(new Color(80, 134, 0));
+        this.setMovementStrategy(new SlowMovementStrategy(0.25));
     }
 
     @Override

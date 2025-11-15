@@ -10,6 +10,7 @@ public class Antylopa extends Zwierze{
         this.setZasiegRuchu(2);
         this.setSzansaWykonywaniaRuchu(1);
         setKolor(new Color(157, 90, 0));
+        this.setMovementStrategy(new ExtendedRangeMovementStrategy(2));
     }
 
     @Override

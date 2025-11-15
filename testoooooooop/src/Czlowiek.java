@@ -1,35 +1,19 @@
-
 import java.awt.*;
 
 public class Czlowiek extends Zwierze {
 
     Napis napis = Napis.getInstance();
-    private Kierunek kierunekRuchu;
+    private PlayerControlledMovementStrategy playerStrategy; // STRATEGY PATTERN
     private Umiejetnosc umiejetnosc;
 
     public Czlowiek(Swiat swiat, Punkt pozycja, int turaUrodzenia) {
         super(RodzajOrganizmu.CZLOWIEK, swiat, pozycja, turaUrodzenia, 5, 4);
         this.setZasiegRuchu(1);
         this.setSzansaWykonywaniaRuchu(1);
-        kierunekRuchu = Kierunek.BRAK_KIERUNKU;
         setKolor(Color.GRAY);
         umiejetnosc = new Umiejetnosc();
-    }
-
-    @Override
-    protected Punkt wykonajRuch() {
-        int x = getPozycja().getX();
-        int y = getPozycja().getY();
-        wybierzDowolnePole(getPozycja());
-        if (kierunekRuchu == Kierunek.BRAK_KIERUNKU ||
-                czyKierunekZablokowany(kierunekRuchu)) return getPozycja();
-        else {
-            if (kierunekRuchu == Kierunek.DOL) return new Punkt(x, y + 1);
-            if (kierunekRuchu == Kierunek.GORA) return new Punkt(x, y - 1);
-            if (kierunekRuchu == Kierunek.LEWO) return new Punkt(x - 1, y);
-            if (kierunekRuchu == Kierunek.PRAWO) return new Punkt(x + 1, y);
-            else return new Punkt(x, y);
-        }
+        this.playerStrategy = new PlayerControlledMovementStrategy();
+        this.setMovementStrategy(playerStrategy);
     }
 
     @Override
@@ -49,7 +33,7 @@ public class Czlowiek extends Zwierze {
                 break;
             } else if (swiat.coZnajdujeSieNaPolu(przyszlaPozycja) != this) wykonajRuch(przyszlaPozycja);
         }
-        kierunekRuchu = Kierunek.BRAK_KIERUNKU;
+        playerStrategy.resetKierunek(); // Resetujemy kierunek po akcji
         umiejetnosc.SprawdzWarunkiUmiejetnosci();
     }
 
@@ -61,7 +45,7 @@ public class Czlowiek extends Zwierze {
         return umiejetnosc;
     }
 
-    public void setKierunekRuchu(Kierunek kierunekRuchu) {
-        this.kierunekRuchu = kierunekRuchu;
+    public void setKierunekRuchu(Organizm.Kierunek kierunekRuchu) {
+        playerStrategy.setKierunekRuchu(kierunekRuchu);
     }
 }

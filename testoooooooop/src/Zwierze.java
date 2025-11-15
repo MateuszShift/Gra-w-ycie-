@@ -4,11 +4,19 @@ public abstract class Zwierze extends Organizm {
     private int zasiegRuchu;//rozny dla antylopy
     Napis napis = Napis.getInstance();
     private double szansaWykonywaniaRuchu;//szansa mniejsza dla zolwia kiedy sie go nadpisze
+    protected MovementStrategy movementStrategy;
+
     public Zwierze(RodzajOrganizmu rodzajOrganizmu, Swiat swiat, Punkt pozycja, int turaUrodzenia, int sila, int inicjatywa) {
         super(rodzajOrganizmu, swiat, pozycja, turaUrodzenia, sila, inicjatywa);
         setCzyRozmnazalSie(false);
         setSzansaRozmnazania(0.5);
+        this.movementStrategy = new StandardMovementStrategy();
     }
+
+    public void setMovementStrategy(MovementStrategy strategy) {
+        this.movementStrategy = strategy;
+    }
+
     public int getZasiegRuchu() {
         return zasiegRuchu;
     }
@@ -16,11 +24,10 @@ public abstract class Zwierze extends Organizm {
         this.zasiegRuchu = zasiegRuchu;
     }
     public void setSzansaWykonywaniaRuchu(double szansaWykonywaniaRuchu) {this.szansaWykonywaniaRuchu = szansaWykonywaniaRuchu;}
+
     protected Punkt wykonajRuch() {
-        Random rand = new Random();
-        int temp = rand.nextInt(100);
-        if (temp >= (int) (szansaWykonywaniaRuchu * 100)) return getPozycja();
-        else return wybierzDowolnePole(getPozycja());
+        // Używamy strategii zamiast bezpośredniej implementacji
+        return movementStrategy.wykonajRuch(this, getPozycja());
     }
     private void rozmnoz(Organizm innyOrganizm) {
         if (this.getCzyRozmnazalSie() || innyOrganizm.getCzyRozmnazalSie()) {
