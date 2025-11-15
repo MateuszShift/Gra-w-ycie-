@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -9,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class SwingSwiat implements ActionListener, KeyListener {
+public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
     private Toolkit toolkit;
     private Dimension dimension;
     private JFrame jFrame;
@@ -20,6 +18,18 @@ public class SwingSwiat implements ActionListener, KeyListener {
     private JPanel glowneMenu;
     private Swiat swiat;
     private Napis napis = Napis.getInstance();
+
+    @Override
+    public void onWorldChanged() {
+        if (grafikaPlanszy != null && grafikaKomentarzy != null) {
+            grafikaPlanszy.odswiezPlansze();
+            grafikaKomentarzy.odswiez();
+            SwingUtilities.updateComponentTreeUI(jFrame);
+            jFrame.requestFocusInWindow();
+        }
+    }
+
+
     public SwingSwiat(String nazwa) { //tworzenie menu i calej symulacji
         toolkit = Toolkit.getDefaultToolkit();
         dimension = toolkit.getScreenSize();
@@ -59,6 +69,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Wysokosc", "20"));
             double zapelnienieSwiatu = Double.parseDouble(JOptionPane.showInputDialog(jFrame, "Zapelnienie", "0.1"));
             swiat = new Swiat(sizeX, sizeY, this);
+            swiat.addObserver(this);
             swiat.generujSwiat(zapelnienieSwiatu);
             rozpocznij();
         }
@@ -67,6 +78,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             String nameOfFile = JOptionPane.showInputDialog(jFrame, "Nazwa pliku", "...");
             swiat = Swiat.wczytaj(nameOfFile);
             swiat.setSwingSwiat(this);
+            swiat.addObserver(this);
             grafikaPlanszy = new GrafikaPlanszy(swiat);
             grafikaKomentarzy = new GrafikaKomentarzy();
             if (grafikaPlanszy != null) {
@@ -121,7 +133,6 @@ public class SwingSwiat implements ActionListener, KeyListener {
             napis.wyczyscKomentarze();
             swiat.setPauza(false);
             swiat.wykonajTure();
-            odswiezSwiat();
             swiat.setPauza(true);
         }
     }
@@ -147,7 +158,6 @@ public class SwingSwiat implements ActionListener, KeyListener {
                     Organizm temp = OrganizmFactory.stworzOrganizm(typOrganizmuList[jList.getSelectedIndex()], swiat, punkt);
                     swiat.dodajOrganizm(temp);
                     napis.dodajNapis("Stworzono nowy organizm " + temp.napisOrganizmToSring() + " na pozycji " + temp.getPozycja().getX() + "," + temp.getPozycja().getY());
-                    odswiezSwiat();
                 }
             });
             JScrollPane scroll = new JScrollPane(jList);
@@ -259,13 +269,6 @@ public class SwingSwiat implements ActionListener, KeyListener {
         glowneMenu.add(grafikaPlanszy);
         grafikaKomentarzy = new GrafikaKomentarzy();
         glowneMenu.add(grafikaKomentarzy);
-        odswiezSwiat();
-    }
-    public void odswiezSwiat() {
-        grafikaPlanszy.odswiezPlansze();
-        grafikaKomentarzy.odswiez();
-        SwingUtilities.updateComponentTreeUI(jFrame);
-        jFrame.requestFocusInWindow();
+        onWorldChanged();
     }
 }
-

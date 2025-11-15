@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.util.*;
 import java.io.File;
@@ -17,6 +15,22 @@ public class Swiat {
     private Czlowiek czlowiek;
     private SwingSwiat swingSwiat;
     Napis napis = Napis.getInstance();
+
+    private List<WorldObserver> observers = new ArrayList<>();
+
+    public void addObserver(WorldObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(WorldObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (WorldObserver observer : observers) {
+            observer.onWorldChanged();
+        }
+    }
 
     public Swiat(SwingSwiat swingSwiat) {
         this.N = 0;
@@ -93,6 +107,7 @@ public class Swiat {
         for (int i = 0; i < listaOrganizmow.size(); i++) {
             listaOrganizmow.get(i).setCzyRozmnazalSie(false);
         }
+        notifyObservers();
     }
     public Punkt wylosujWolnePole() {
         Random rand = new Random();
@@ -125,6 +140,7 @@ public class Swiat {
     public void dodajOrganizm(Organizm organizm) {
         listaOrganizmow.add(organizm);
         plansza[organizm.getPozycja().getY()][organizm.getPozycja().getX()] = organizm;
+        notifyObservers();
     }
     public void usunOrganizm(Organizm organizm) {
         plansza[organizm.getPozycja().getY()][organizm.getPozycja().getX()] = null;
@@ -133,6 +149,7 @@ public class Swiat {
             czyCzlowiekZyje = false;
             czlowiek = null;
         }
+        notifyObservers();
     }
     public int getSizeN() {
         return N;
