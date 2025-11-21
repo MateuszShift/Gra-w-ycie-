@@ -58,7 +58,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             int sizeX = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Szerokosc", "20"));
             int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Wysokosc", "20"));
             double zapelnienieSwiatu = Double.parseDouble(JOptionPane.showInputDialog(jFrame, "Zapelnienie", "0.1"));
-            swiat = new Swiat(sizeX, sizeY, this);
+            swiat = new SwiatBuilder(sizeX, sizeY, this).build();
             swiat.generujSwiat(zapelnienieSwiatu);
             rozpocznij();
         }

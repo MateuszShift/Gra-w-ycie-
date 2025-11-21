@@ -18,32 +18,19 @@ public class Swiat {
     private SwingSwiat swingSwiat;
     Napis napis = Napis.getInstance();
 
-    public Swiat(SwingSwiat swingSwiat) {
-        this.N = 0;
-        this.M = 0;
-        wiekWTurach = 0;
-        czyCzlowiekZyje = true;
-        czyJestKoniecGry = false;
-        pauza = true;
-        listaOrganizmow = new ArrayList<>();
-        this.swingSwiat = swingSwiat;
+
+    public Swiat(SwiatBuilder builder) {
+        this.N = builder.sizeN;
+        this.M = builder.sizeM;
+        this.wiekWTurach = builder.wiekWTurach;
+        this.plansza = builder.plansza;
+        this.czyCzlowiekZyje = builder.czyCzlowiekZyje;
+        this.czyJestKoniecGry = builder.czyJestKoniecGry;
+        this.pauza = builder.pauza;
+        this.listaOrganizmow = builder.listaOrganizmow;
+        this.swingSwiat = builder.swingSwiat;
     }
-    public Swiat(int sizeN, int sizeM, SwingSwiat swingSwiat) {
-        this.N = sizeN;
-        this.M = sizeM;
-        wiekWTurach = 0;
-        czyCzlowiekZyje = true;
-        czyJestKoniecGry = false;
-        pauza = true;
-        plansza = new Organizm[sizeM][sizeN];
-        for (int i = 0; i < sizeM; i++) {
-            for (int j = 0; j < sizeN; j++) {
-                plansza[i][j] = null;
-            }
-        }
-        listaOrganizmow = new ArrayList<>();
-        this.swingSwiat = swingSwiat;
-    }
+
     private void sortujOrganizmy() {
         Collections.sort(listaOrganizmow, new Comparator<Organizm>() {
             @Override
@@ -199,15 +186,18 @@ public class Swiat {
             Scanner scanner = new Scanner(file);
             String line = scanner.nextLine();
             String[] zapis = line.split(" ");
-            int sizeX = Integer.parseInt(zapis[0]);
-            int sizeY = Integer.parseInt(zapis[1]);
-            Swiat temp = new Swiat(sizeX, sizeY, null);
-            int numerTury = Integer.parseInt(zapis[2]);
-            temp.wiekWTurach = numerTury;
-            boolean czyCzlowiekZyje = Boolean.parseBoolean(zapis[3]);
-            temp.czyCzlowiekZyje = czyCzlowiekZyje;
-            boolean czyJestKoniecGry = Boolean.parseBoolean(zapis[4]);
-            temp.czyJestKoniecGry = czyJestKoniecGry;
+
+            SwiatBuilder builder = new SwiatBuilder(Integer.parseInt(zapis[0]), Integer.parseInt(zapis[1]), null)
+                    .setWiekWTurach(Integer.parseInt(zapis[2]))
+                    .setPlansza()
+                    .setCzyCzlowiekZyje(Boolean.parseBoolean(zapis[3]))
+                    .setCzyJestKoniecGry(Boolean.parseBoolean(zapis[4]))
+                    .setPauza()
+                    .setListaOrganizmow()
+                    .setSwingSwiat(null);
+
+
+            Swiat temp = builder.build();
             temp.czlowiek = null;
 
             while (scanner.hasNextLine()) {
