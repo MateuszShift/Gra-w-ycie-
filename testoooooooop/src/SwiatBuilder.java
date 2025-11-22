@@ -9,6 +9,7 @@ public class SwiatBuilder {
     public boolean czyJestKoniecGry;
     public boolean pauza;
     public ArrayList<Organizm> listaOrganizmow;
+    public Czlowiek czlowiek;
     public SwingSwiat swingSwiat;
 
     public SwiatBuilder(int sizeN, int sizeM, SwingSwiat swingSwiat) {
@@ -20,6 +21,7 @@ public class SwiatBuilder {
         this.czyJestKoniecGry = false;
         this.pauza = true;
         this.listaOrganizmow = new ArrayList<>();
+        this.czlowiek = null;
         this.swingSwiat = swingSwiat;
     }
 
@@ -40,5 +42,6 @@ public class SwiatBuilder {
     public SwiatBuilder setCzyJestKoniecGry(boolean czyJestKoniecGry) { this.czyJestKoniecGry = czyJestKoniecGry; return this; }
     public SwiatBuilder setPauza() { this.pauza = true; return this; }
     public SwiatBuilder setListaOrganizmow() { this.listaOrganizmow = new ArrayList<>(); return this; }
+    public SwiatBuilder setCzlowiek() { this.czlowiek = null; return this; }
     public SwiatBuilder setSwingSwiat(SwingSwiat swing) { this.swingSwiat = swing; return this; }
 }

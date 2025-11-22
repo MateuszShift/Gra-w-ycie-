@@ -194,11 +194,11 @@ public class Swiat {
                     .setCzyJestKoniecGry(Boolean.parseBoolean(zapis[4]))
                     .setPauza()
                     .setListaOrganizmow()
+                    .setCzlowiek()
                     .setSwingSwiat(null);
 
 
             Swiat temp = builder.build();
-            temp.czlowiek = null;
 
             while (scanner.hasNextLine()) {
                 line = scanner.nextLine();
