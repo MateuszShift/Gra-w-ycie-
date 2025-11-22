@@ -17,6 +17,7 @@ public class Swiat {
     private Czlowiek czlowiek;
     private SwingSwiat swingSwiat;
     Napis napis = Napis.getInstance();
+    private KolizjaHandler lancuchKolizji;
 
     public Swiat(SwingSwiat swingSwiat) {
         this.N = 0;
@@ -73,6 +74,26 @@ public class Swiat {
                 return;
             }
         }
+    }
+    public void utworzLancuchKolizji() {
+        KolizjaHandler rozmnazenie = new RozmnazanieHandler();
+        KolizjaHandler czlowiekZUmiejetnosciami = new CzlowiekZUmiejetnosciaHandler();
+        KolizjaHandler czlowiekBezUmiejetnosci = new CzlowiekBezUmiejetnosciHandler();
+        KolizjaHandler roslinySpecjalne = new RoslinySpecjalneHandler();
+        KolizjaHandler odbijAtak = new OdbijAtakHandler();
+        KolizjaHandler walka = new WalkaHandler();
+
+        rozmnazenie.setNext(czlowiekZUmiejetnosciami);
+        czlowiekZUmiejetnosciami.setNext(czlowiekBezUmiejetnosci);
+        czlowiekBezUmiejetnosci.setNext(roslinySpecjalne);
+        roslinySpecjalne.setNext(odbijAtak);
+        odbijAtak.setNext(walka);
+
+        this.lancuchKolizji = rozmnazenie;
+    }
+
+    public KolizjaHandler getLancuchKolizji() {
+        return lancuchKolizji;
     }
     public void wykonajTure() {
         if (czyJestKoniecGry) return;

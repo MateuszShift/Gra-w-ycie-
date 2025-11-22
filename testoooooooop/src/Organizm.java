@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.Random;
 
 public abstract class Organizm {
+
     public enum RodzajOrganizmu {CZLOWIEK, WILK, OWCA, LIS, ZOLW, ANTYLOPA, TRAWA, MLECZ, GUARANA, WILCZE_JAGODY, BARSZCZ_SOSNOWSKIEGO;}
     public enum Kierunek {
         LEWO(0), PRAWO(1), GORA(2), DOL(3), BRAK_KIERUNKU(4);
@@ -280,5 +281,7 @@ public abstract class Organizm {
         odblokujKierunek(Kierunek.GORA);
         odblokujKierunek(Kierunek.DOL);
     }
+
+    public void rozmnoz(Organizm atakowany) {}
 
 }

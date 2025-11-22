@@ -22,7 +22,8 @@ public abstract class Zwierze extends Organizm {
         if (temp >= (int) (szansaWykonywaniaRuchu * 100)) return getPozycja();
         else return wybierzDowolnePole(getPozycja());
     }
-    private void rozmnoz(Organizm innyOrganizm) {
+    @Override
+    public void rozmnoz(Organizm innyOrganizm) {
         if (this.getCzyRozmnazalSie() || innyOrganizm.getCzyRozmnazalSie()) {
             return;
         }
@@ -61,99 +62,7 @@ public abstract class Zwierze extends Organizm {
     }
     @Override
     public void kolizja(Organizm innyOrganizm) {
-        if (getRodzajOrganizmu() == innyOrganizm.getRodzajOrganizmu()) {
-            Random rand = new Random();
-            int temp = rand.nextInt(100);
-            if (temp < getSzansaRozmnazania() * 100) {
-                rozmnoz(innyOrganizm);
-            }
-        }
-        else {
-            if(this.getRodzajOrganizmu().equals(RodzajOrganizmu.CZLOWIEK) && swiat.getCzlowiek().getUmiejetnosc().getCzyJestAktywna() == true){
-                if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.WILCZE_JAGODY)){
-                    swiat.usunOrganizm(innyOrganizm);
-                    wykonajRuch(innyOrganizm.getPozycja());
-                    napis.dodajNapis("Czlowiek scial wilcze jagody na pozycji " + innyOrganizm.getPozycja().getX()+","+innyOrganizm.getPozycja().getY());
-                    return;
-                }
-                if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.WILK)){
-                    swiat.usunOrganizm(innyOrganizm);
-                    wykonajRuch(innyOrganizm.getPozycja());
-                    napis.dodajNapis("Czlowiek pokonal wilka na pozycji " + innyOrganizm.getPozycja().getX()+","+innyOrganizm.getPozycja().getY());
-                    return;
-                }
-                if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.BARSZCZ_SOSNOWSKIEGO)){
-                    swiat.usunOrganizm(innyOrganizm);
-                    wykonajRuch(innyOrganizm.getPozycja());
-                    napis.dodajNapis("Czlowiek scial barszcz sosnowskiego !!!");
-                    return;
-                }
-            }
-            else if (this.getRodzajOrganizmu().equals(RodzajOrganizmu.CZLOWIEK) && swiat.getCzlowiek().getUmiejetnosc().getCzyJestAktywna() == false && this.getSila() >= innyOrganizm.getSila()){
-                if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.GUARANA)){
-                    swiat.usunOrganizm(innyOrganizm);
-                    wykonajRuch(innyOrganizm.getPozycja());
-                    this.setSila(getSila()+3);
-                    napis.dodajNapis("Dodano 3 sily czlowiekowi bo zjadl guarane " + innyOrganizm.getPozycja().getX()+","+innyOrganizm.getPozycja().getY());
-                    return;
+        swiat.getLancuchKolizji().handle(this, innyOrganizm, swiat, napis);
 
-                }
-                napis.dodajNapis("Czlowiek zabil " +innyOrganizm.rodzajOrganizmuToString() + " " + innyOrganizm.getPozycja().getX()+","+innyOrganizm.getPozycja().getY());
-                swiat.usunOrganizm(innyOrganizm);
-                wykonajRuch(innyOrganizm.getPozycja());
-                return;
-            }
-            else if (this.getRodzajOrganizmu().equals(RodzajOrganizmu.CZLOWIEK) && swiat.getCzlowiek().getUmiejetnosc().getCzyJestAktywna() == false && this.getSila() < innyOrganizm.getSila()){
-                napis.dodajNapis("Czlowiek ginie od " + innyOrganizm.rodzajOrganizmuToString() + " na pozycji " + innyOrganizm.getPozycja().getX()+","+innyOrganizm.getPozycja().getY());
-                swiat.usunOrganizm(this);
-                if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.WILK)){
-                    innyOrganizm.wykonajRuch(this.getPozycja());
-                }
-                return;
-            }
-            if (innyOrganizm.odbijAtak(this, innyOrganizm)) {
-                return;
-            }
-            if (odbijAtak(this, innyOrganizm)) {
-                return;
-            }
-            if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.GUARANA)){
-                this.setSila(this.getSila() + 3);
-                napis.dodajNapis(this.rodzajOrganizmuToString() + " zjadl guarane i ma wiecej sily o 3");
-                swiat.usunOrganizm(innyOrganizm);
-                wykonajRuch(innyOrganizm.getPozycja());
-                return;
-            }
-            if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.WILCZE_JAGODY)){
-                napis.dodajNapis(this.rodzajOrganizmuToString() + " probowal zjesc wilcze jagody i umarl");
-                swiat.usunOrganizm(this);
-                return;
-            }
-//            if(this.getRodzajOrganizmu().equals(RodzajOrganizmu.WILK)){
-//                if(this.getSila() > innyOrganizm.getSila()){
-//                    swiat.usunOrganizm(innyOrganizm);
-//                    napis.dodajNapis(this.rodzajOrganizmuToString()+ " pokonał " + innyOrganizm.rodzajOrganizmuToString());
-//                    return;
-//                }
-//            }
-//            if(innyOrganizm.getRodzajOrganizmu().equals(RodzajOrganizmu.WILK)){
-//                if(innyOrganizm.getSila() > this.getSila()){
-//                    swiat.usunOrganizm(this);
-//                    napis.dodajNapis(innyOrganizm.rodzajOrganizmuToString() +" pokonal " + this.rodzajOrganizmuToString());
-//                    return;
-//                }
-//            }
-            if (this.getSila() >= innyOrganizm.getSila()) {
-                swiat.usunOrganizm(innyOrganizm);
-                wykonajRuch(innyOrganizm.getPozycja());
-                napis.dodajNapis(napisOrganizmToSring() + " pokonal " + innyOrganizm.napisOrganizmToSring() + " na pozycji " + innyOrganizm.getPozycja().getX()+","+innyOrganizm.getPozycja().getY());
-                return;
-            }
-            else {
-                swiat.usunOrganizm(this);
-                napis.dodajNapis(innyOrganizm.napisOrganizmToSring() + " pokonal " + napisOrganizmToSring() + " na pozycji " + this.getPozycja().getX()+","+this.getPozycja().getY());
-                return;
-            }
-        }
     }
 }

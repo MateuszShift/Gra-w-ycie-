@@ -60,6 +60,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             double zapelnienieSwiatu = Double.parseDouble(JOptionPane.showInputDialog(jFrame, "Zapelnienie", "0.1"));
             swiat = new Swiat(sizeX, sizeY, this);
             swiat.generujSwiat(zapelnienieSwiatu);
+            swiat.utworzLancuchKolizji();
             rozpocznij();
         }
         if (e.getSource() == wczytajSymulacje) {
@@ -75,6 +76,7 @@ public class SwingSwiat implements ActionListener, KeyListener {
             if (grafikaKomentarzy != null){
                 glowneMenu.remove(grafikaKomentarzy);
             }
+            swiat.utworzLancuchKolizji();
             rozpocznij();
         }
         if (e.getSource() == zapiszSymulacje) {
