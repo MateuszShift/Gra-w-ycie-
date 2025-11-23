@@ -1,33 +1,42 @@
 public class Umiejetnosc {
-    private boolean czyMoznaAktywowac;
-    private boolean czyJestAktywna;
+    public Napis napis = Napis.getInstance();
+    private UmiejetnoscState currentState;
     private int czasTrwaniaUmiejetnosci;
     private int cooldownUmiejetnosci;
 
     public Umiejetnosc() {
-        cooldownUmiejetnosci = 0;
+        currentState = new GotowaState();
         czasTrwaniaUmiejetnosci = 0;
-        czyJestAktywna = false;
-        czyMoznaAktywowac = true;
-    }
-    public void Dezaktywuj() {
-        czyJestAktywna = false;
+        cooldownUmiejetnosci = 0;
     }
 
-    public boolean getCzyMoznaAktywowac() {
-        return czyMoznaAktywowac;
+    public void setState(UmiejetnoscState newState) {
+        this.currentState = newState;
     }
 
-    public void setCzyMoznaAktywowac(boolean czyMoznaAktywowac) {
-        this.czyMoznaAktywowac = czyMoznaAktywowac;
+    public void Aktywuj() {
+        if (currentState instanceof GotowaState) {
+            napis.dodajNapis("Rozpoczynam 5 tur nieśmiertelności.");
+            czasTrwaniaUmiejetnosci = 5;
+            cooldownUmiejetnosci = 10;
+            currentState = new AktywnaState();
+        } else if (currentState instanceof AktywnaState) {
+            napis.dodajNapis("Umiejętność jest już aktywna!");
+        } else if (currentState instanceof CooldownState) {
+            napis.dodajNapis("Umiejętność w cooldown! Pozostało tur: " + cooldownUmiejetnosci);
+        }
+    }
+
+    public void SprawdzWarunkiUmiejetnosci() {
+        currentState.aktualizuj(this);
     }
 
     public boolean getCzyJestAktywna() {
-        return czyJestAktywna;
+        return currentState instanceof AktywnaState;
     }
 
-    public void setCzyJestAktywna(boolean czyJestAktywna) {
-        this.czyJestAktywna = czyJestAktywna;
+    public boolean getCzyMoznaAktywowac() {
+        return currentState instanceof GotowaState;
     }
 
     public int getCzasTrwania() {
@@ -44,21 +53,5 @@ public class Umiejetnosc {
 
     public void setCooldown(int cooldown) {
         this.cooldownUmiejetnosci = cooldown;
-    }
-
-    public void SprawdzWarunkiUmiejetnosci() {
-        if (cooldownUmiejetnosci > 0) cooldownUmiejetnosci--;
-        if (czasTrwaniaUmiejetnosci > 0) czasTrwaniaUmiejetnosci--;
-        if (czasTrwaniaUmiejetnosci == 0) Dezaktywuj();
-        if (cooldownUmiejetnosci == 0) czyMoznaAktywowac = true;
-    }
-
-    public void Aktywuj() {
-        if (cooldownUmiejetnosci == 0) {
-            czyJestAktywna = true;
-            czyMoznaAktywowac = false;
-            cooldownUmiejetnosci = 10;
-            czasTrwaniaUmiejetnosci = 5;
-        }
     }
 }

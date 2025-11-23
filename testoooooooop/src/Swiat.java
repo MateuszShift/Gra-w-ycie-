@@ -231,10 +231,6 @@ public class Swiat {
                     temp.czlowiek.getUmiejetnosc().setCzasTrwania(czasTrwania);
                     int cooldown = Integer.parseInt(zapis[7]);
                     temp.czlowiek.getUmiejetnosc().setCooldown(cooldown);
-                    boolean czyJestAktywna = Boolean.parseBoolean(zapis[8]);
-                    temp.czlowiek.getUmiejetnosc().setCzyJestAktywna(czyJestAktywna);
-                    boolean czyMoznaAktywowac = Boolean.parseBoolean(zapis[9]);
-                    temp.czlowiek.getUmiejetnosc().setCzyMoznaAktywowac(czyMoznaAktywowac);
                 }
                 temp.dodajOrganizm(tOrg);
             }

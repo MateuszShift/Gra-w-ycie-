@@ -1,4 +1,3 @@
-
 import java.awt.*;
 
 public class Czlowiek extends Zwierze {
@@ -34,13 +33,6 @@ public class Czlowiek extends Zwierze {
 
     @Override
     public void akcja() {
-        if (umiejetnosc.getCzyJestAktywna()) {
-            napis.dodajNapis(napisOrganizmToSring() + " jest niesmiertelny jeszcze przez " + umiejetnosc.getCzasTrwania() + " tur)");
-        }
-        if(umiejetnosc.getCzyJestAktywna() == false){
-            napis.dodajNapis(napisOrganizmToSring()+ " jest ŚMIERTELNY, siła: " + getSila());
-
-        }
         for (int i = 0; i < getZasiegRuchu(); i++) {
             Punkt przyszlaPozycja = wykonajRuch();
 
@@ -49,6 +41,7 @@ public class Czlowiek extends Zwierze {
                 break;
             } else if (swiat.coZnajdujeSieNaPolu(przyszlaPozycja) != this) wykonajRuch(przyszlaPozycja);
         }
+
         kierunekRuchu = Kierunek.BRAK_KIERUNKU;
         umiejetnosc.SprawdzWarunkiUmiejetnosci();
     }
@@ -57,6 +50,7 @@ public class Czlowiek extends Zwierze {
     public String rodzajOrganizmuToString() {
         return "czlowiek";
     }
+
     public Umiejetnosc getUmiejetnosc() {
         return umiejetnosc;
     }
