@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
+public class SwingSwiat implements ActionListener, KeyListener {
     private Toolkit toolkit;
     private Dimension dimension;
     private JFrame jFrame;
@@ -18,17 +18,6 @@ public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
     private JPanel glowneMenu;
     private Swiat swiat;
     private Napis napis = Napis.getInstance();
-
-    @Override
-    public void onWorldChanged() {
-        if (grafikaPlanszy != null && grafikaKomentarzy != null) {
-            grafikaPlanszy.odswiezPlansze();
-            grafikaKomentarzy.odswiez();
-            SwingUtilities.updateComponentTreeUI(jFrame);
-            jFrame.requestFocusInWindow();
-        }
-    }
-
 
     public SwingSwiat(String nazwa) { //tworzenie menu i calej symulacji
         toolkit = Toolkit.getDefaultToolkit();
@@ -69,7 +58,6 @@ public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
             int sizeY = Integer.parseInt(JOptionPane.showInputDialog(jFrame, "Wysokosc", "20"));
             double zapelnienieSwiatu = Double.parseDouble(JOptionPane.showInputDialog(jFrame, "Zapelnienie", "0.1"));
             swiat = new Swiat(sizeX, sizeY, this);
-            swiat.addObserver(this);
             swiat.generujSwiat(zapelnienieSwiatu);
             rozpocznij();
         }
@@ -78,7 +66,6 @@ public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
             String nameOfFile = JOptionPane.showInputDialog(jFrame, "Nazwa pliku", "...");
             swiat = Swiat.wczytaj(nameOfFile);
             swiat.setSwingSwiat(this);
-            swiat.addObserver(this);
             grafikaPlanszy = new GrafikaPlanszy(swiat);
             grafikaKomentarzy = new GrafikaKomentarzy();
             if (grafikaPlanszy != null) {
@@ -165,7 +152,7 @@ public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
             setVisible(true);
         }
     }
-    private class GrafikaPlanszy extends JPanel {
+    private class GrafikaPlanszy extends JPanel implements WorldObserver {
         private final int sizeX;
         private final int sizeY;
         private PolePlanszy[][] polaPlanszy;
@@ -241,8 +228,15 @@ public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
                 }
             }
         }
+
+        @Override
+        public void onWorldChanged() {
+            odswiezPlansze();
+            SwingUtilities.updateComponentTreeUI(jFrame);
+            jFrame.requestFocusInWindow();
+        }
     }
-    private class GrafikaKomentarzy extends JPanel {
+    private class GrafikaKomentarzy extends JPanel implements WorldObserver {
         private String tekst;
         private final String instriction = "Numer indeksu: 193355\nSTEROWANIE\n\nKieruj czlowiekiem - strzalki p - aby aktywowac niesmiertelnosc\n\nLista organizmow : szary - czlowiek,zolw - zielony, wilk - szaroniebieski\nantylopa - pomaranczowy,lis - jasny pomaranczowy, owca - brązowy\n barszcz - ciemny różowy, guarana - ciemny czerwony, jagody - czerowny\nmlecz - zolty, trawa - ciemny zielony";
         private JTextArea textArea;
@@ -262,6 +256,11 @@ public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
             tekst = instriction + napis.getTekst();
             textArea.setText(tekst);
         }
+
+        @Override
+        public void onWorldChanged() {
+            odswiez();
+        }
     }
 
     private void rozpocznij() {
@@ -269,6 +268,9 @@ public class SwingSwiat implements ActionListener, KeyListener, WorldObserver {
         glowneMenu.add(grafikaPlanszy);
         grafikaKomentarzy = new GrafikaKomentarzy();
         glowneMenu.add(grafikaKomentarzy);
-        onWorldChanged();
+        swiat.addObserver(grafikaPlanszy);
+        swiat.addObserver(grafikaKomentarzy);
+        grafikaPlanszy.onWorldChanged();
+        grafikaKomentarzy.onWorldChanged();
     }
 }
