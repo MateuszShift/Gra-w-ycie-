@@ -80,7 +80,9 @@ public class SwingSwiat implements ActionListener, KeyListener {
             String nameOfFile = JOptionPane.showInputDialog(jFrame, "Nazwa pliku", "...");
             swiat.zapisz(nameOfFile);
             napis.dodajNapis("Zapisano symulacje");
-            grafikaKomentarzy.odswiez();
+            if (grafikaKomentarzy != null) {
+                grafikaKomentarzy.onWorldChanged();
+            }
         }
         if (e.getSource() == wyjdz) {
             jFrame.dispose();
@@ -105,16 +107,13 @@ public class SwingSwiat implements ActionListener, KeyListener {
                     umiejetnosc.Aktywuj();
                 } else {
                     napis.dodajNapis("\nNie mozna sie tak poruszac sprobuj jeszcze raz");
-                    grafikaKomentarzy.odswiez();
                     return;
                 }
             } else if (!swiat.getCzyCzlowiekZyje()) {
                 napis.dodajNapis("Czlowiek umarl, to koniec");
-                grafikaKomentarzy.odswiez();
                 return;
             } else {
                 napis.dodajNapis("\nNie mozna sie tak poruszac sprobuj jeszcze raz");
-                grafikaKomentarzy.odswiez();
                 return;
             }
             napis.wyczyscKomentarze();
@@ -212,7 +211,9 @@ public class SwingSwiat implements ActionListener, KeyListener {
             public int getPozX() {return pozX;}
             public int getPozY() {return pozY;}
         }
-        public void odswiezPlansze() { //namalowanie elementów na nowo
+
+        @Override
+        public void onWorldChanged() {
             for (int i = 0; i < sizeY; i++) {
                 for (int j = 0; j < sizeX; j++) {
                     Organizm temp = swiat.getPlansza()[i][j];
@@ -227,11 +228,6 @@ public class SwingSwiat implements ActionListener, KeyListener {
                     }
                 }
             }
-        }
-
-        @Override
-        public void onWorldChanged() {
-            odswiezPlansze();
             SwingUtilities.updateComponentTreeUI(jFrame);
             jFrame.requestFocusInWindow();
         }
@@ -252,14 +248,11 @@ public class SwingSwiat implements ActionListener, KeyListener {
             JScrollPane scroll = new JScrollPane(textArea);
             add(scroll);
         }
-        public void odswiez() {
-            tekst = instriction + napis.getTekst();
-            textArea.setText(tekst);
-        }
 
         @Override
         public void onWorldChanged() {
-            odswiez();
+            tekst = instriction + napis.getTekst();
+            textArea.setText(tekst);
         }
     }
 
